@@ -1,6 +1,9 @@
 package com;
 
+import com.draw.Draw;
 import com.mesh.MeshReader;
+import com.mesh.MeshWriter;
+import com.mesh.object.Mesh;
 
 public class Run {
 
@@ -12,7 +15,12 @@ public class Run {
 		MeshReader reader = new MeshReader(meshFilePath);
 		reader.saveText("D:\\data\\123\\saveText.txt");
 		reader.saveData("D:\\data\\123\\saveData.txt");
-		reader.toMesh();
+		Mesh mesh = reader.toMesh();
+		MeshWriter writer=new MeshWriter(mesh);
+		writer.saveMesh("D:\\data\\123\\saveMesh.txt");
+
+		// Draw draw=new Draw(mesh);
+		// draw.run();
 	}
 
 }

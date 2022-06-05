@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -31,6 +32,7 @@ public class MeshReader {
 	private BufferedReader reader;
 	private Text text;
 	private Data data;
+	private Mesh mesh;
 
 	public MeshReader(String meshFilePath) throws Exception {
 		this.meshFilePath = meshFilePath;
@@ -157,7 +159,7 @@ public class MeshReader {
 	}
 
 	public Mesh toMesh() {
-		Mesh mesh = new Mesh();
+		mesh = new Mesh();
 		// data
 		mesh.setData(data);
 		// m_Name
@@ -180,7 +182,10 @@ public class MeshReader {
 		List<Data> m_IndexBuffer = data.getByName("m_IndexBuffer").get(0).getChildList();
 
 		for (Iterator<Data> iterator = m_IndexBuffer.iterator(); iterator.hasNext();) {
-			mesh.getM_IndexBuffer().add(BitConverter.toLong(iterator.next().intValue(), iterator.next().intValue()));
+			byte[] bytes = new byte[2];
+			bytes[0] = iterator.next().byteValue();
+			bytes[1] = iterator.next().byteValue();
+			mesh.getM_IndexBuffer().add(bytesToLong(bytes));
 		}
 		Data m_VertexData = data.getByName("m_VertexData");
 		int m_VertexCount = m_VertexData.getByName("m_VertexCount").intValue();
@@ -295,11 +300,25 @@ public class MeshReader {
 		}
 		int indexCount = 0;
 		for (SubMesh subMesh : mesh.getM_SubMeshes()) {
-			System.out.println("subMesh," + subMesh.indexCount);
-			indexCount += subMesh.indexCount;
+			System.out.println("subMesh," + subMesh.getIndexCount());
+			indexCount += subMesh.getIndexCount().intValue();
 		}
 		System.out.println("subMesh,count=" + indexCount + "," + indexCount / 3);
 		System.out.println("----------" + log + " printChannal end----------");
 
+	}
+
+	public static long bytesToLong(byte[] bytes) {
+		long value = 0;
+		for (int i = 0; i < bytes.length; i++) {
+			value <<= 8;
+			byte b = bytes[bytes.length - 1 - i];
+			long a = b;
+			if (a < 0) {
+				a = (b & 0xff);
+			}
+			value |= a;
+		}
+		return value;
 	}
 }

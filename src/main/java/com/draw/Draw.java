@@ -108,18 +108,18 @@ public class Draw extends JFrame
 		// 按面
 		gl.glColor3f(0f, 0f, 1f);
 		gl.glBegin(GL2.GL_TRIANGLES);
-		// System.err.println(mesh.m_Indices.size());
-		// System.err.println(mesh.m_Vertices.size());
-		// System.err.println("--------------");
+
 		List<Long> m_IndexBuffer = mesh.getM_IndexBuffer();
 		List<Float> m_Vertices = mesh.getM_Vertices();
-
+		//System.err.println(m_IndexBuffer.size());
+		//System.err.println(m_Vertices.size());
+		//System.err.println("--------------");
 		for (int i = 0; i < m_IndexBuffer.size(); i += 3) {
 			int long3 = m_IndexBuffer.get(i + 0).intValue();
 			int long2 = m_IndexBuffer.get(i + 1).intValue();
 			int long1 = m_IndexBuffer.get(i + 2).intValue();
 			// System.out.println(i/3+","+(long1+1)+","+(long2+1)+","+(long3+1));
-			// System.out.println(i+","+long1*3+","+long2*3+","+long3*3);
+			//System.out.println(i + "," + long1 * 3 + "," + long2 * 3 + "," + long3 * 3);
 			gl.glVertex3f(-m_Vertices.get(long1 * 3 + 0), m_Vertices.get(long1 * 3 + 1), m_Vertices.get(long1 * 3 + 2));
 			gl.glVertex3f(-m_Vertices.get(long2 * 3 + 0), m_Vertices.get(long2 * 3 + 1), m_Vertices.get(long2 * 3 + 2));
 			gl.glVertex3f(-m_Vertices.get(long3 * 3 + 0), m_Vertices.get(long3 * 3 + 1), m_Vertices.get(long3 * 3 + 2));
@@ -203,7 +203,7 @@ public class Draw extends JFrame
 
 	GLCanvas glcanvas;
 
-	public void starting() {
+	public void run() {
 		final GLProfile profile = GLProfile.get(GLProfile.GL2);
 		GLCapabilities capabilities = new GLCapabilities(profile);
 		capabilities.setDoubleBuffered(true);

@@ -7,6 +7,7 @@ import java.util.List;
 public class Data {
 
 	protected int deep;
+	private int deepAdd;
 	protected String start;
 	protected Type type;
 	protected String name;
@@ -94,7 +95,7 @@ public class Data {
 	////////////////
 
 	public byte byteValue() {
-		return (byte)intValue();
+		return (byte) intValue();
 	}
 
 	public int intValue() {
@@ -108,11 +109,6 @@ public class Data {
 	public float floatValue() {
 		return Float.valueOf(value);
 		// return BitConverter.toFloat(longToBytes(Integer.valueOf(value), 4));
-	}
-
-	@Override
-	public String toString() {
-		return value + "";
 	}
 
 	public Data getByType(Type type) {
@@ -131,10 +127,21 @@ public class Data {
 		if (deep == 0 && parent != null) {
 			deep = parent.deep + 1;
 		}
+		this.deepAdd = deepAdd;
 		if (this instanceof Array) {
 			((Array) this).save(writer);
 			return;
 		}
+
+		writer.append(toString());
+		writer.newLine();
+		for (Data data : childList) {
+			data.save(writer, this, deepAdd);
+		}
+	}
+
+	@Override
+	public String toString() {
 		StringBuilder stringBuilder = new StringBuilder();
 		for (int i = 0; i < deep + deepAdd; i++) {
 			stringBuilder.append(" ");
@@ -159,12 +166,7 @@ public class Data {
 			stringBuilder.append(" = ");
 			stringBuilder.append(value);
 		}
-
-		writer.append(stringBuilder);
-		writer.newLine();
-		for (Data data : childList) {
-			data.save(writer, this, deepAdd);
-		}
+		return stringBuilder.toString();
 	}
 
 }

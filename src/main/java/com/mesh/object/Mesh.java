@@ -2,11 +2,12 @@ package com.mesh.object;
 
 import com.mesh.data.Data;
 import com.mesh.data.List;
+import com.mesh.data.Type;
 
 public class Mesh {
 	private Data data;
 	private Data m_Name;
-	private List<SubMesh> m_SubMeshes = new List<SubMesh>("m_SubMeshes");
+	private List<SubMesh> m_SubMeshes = new List<SubMesh>("m_SubMeshes",Type.VECTOR);
 	private Data m_Shapes;
 	private Data m_BindPose;
 	private Data m_BoneNameHashes;
@@ -18,7 +19,7 @@ public class Mesh {
 	private Data m_KeepIndices;
 	private Data m_IndexFormat;
 
-	private List<Long> m_IndexBuffer = new List<Long>("m_IndexBuffer");
+	private List<Long> m_IndexBuffer = new List<Long>("m_IndexBuffer",Type.VECTOR);
 
 	private List<Float> m_Vertices = new List<Float>();
 	private List<Float> m_Normals = new List<Float>();
@@ -34,7 +35,7 @@ public class Mesh {
 	private List<Float> m_Tangents = new List<Float>();
 	private List<Float> m_Skin_weight = new List<Float>();
 	private List<Float> m_Skin_boneIndex = new List<Float>();
-	private List<Channel> m_Channels = new List<Channel>("m_Channels");
+	private List<Channel> m_Channels = new List<Channel>("m_Channels",Type.VECTOR);
 
 	private Data m_CompressedMesh;
 	private Data m_LocalAABB;
@@ -43,7 +44,7 @@ public class Mesh {
 	private Data m_MeshMetrics0;
 	private Data m_MeshMetrics1;
 	private Data m_StreamData;
-	
+
 	public int getVertexCount() {
 		return m_Vertices.size() / 3;
 	}

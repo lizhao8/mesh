@@ -1,93 +1,108 @@
 package com.mesh.object;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.mesh.data.Data;
+import com.mesh.data.Type;
 
 public class SubMesh {
-	public long firstByte;
-	public long indexCount;
-	public long topology;// GfxPrimitiveType
-	public long baseVertex;
-	public long firstVertex;
-	public long vertexCount;
-	public AABB localAABB;
-
-	public List<Face> faceList = new ArrayList<Face>();
+	private Data firstByte;
+	private Data indexCount;
+	private Data topology;// GfxPrimitiveType
+	private Data baseVertex;
+	private Data firstVertex;
+	private Data vertexCount;
+	// private AABB localAABB;
+	private Data localAABB;
+	private Data data;
+	private Type type;
 
 	public SubMesh(Data data) {
-		firstByte = data.getByName("firstByte").intValue();
-		indexCount = data.getByName("indexCount").intValue();
-		topology = data.getByName("topology").intValue();
-		baseVertex = data.getByName("baseVertex").intValue();
-		firstVertex = data.getByName("firstVertex").intValue();
-		vertexCount = data.getByName("vertexCount").intValue();
-		localAABB = new AABB(data.getByName("localAABB"));
+		this.data = data;
+		this.type = data.getType();
+		firstByte = data.getByName("firstByte");
+		indexCount = data.getByName("indexCount");
+		topology = data.getByName("topology");
+		baseVertex = data.getByName("baseVertex");
+		firstVertex = data.getByName("firstVertex");
+		vertexCount = data.getByName("vertexCount");
+		// localAABB = new AABB(data.getByName("localAABB"));
+		localAABB = data.getByName("localAABB");
 	}
 
-	public long getFirstByte() {
+	public Data getData() {
+		return data;
+	}
+
+	public void setData(Data data) {
+		this.data = data;
+	}
+
+	public Data getFirstByte() {
 		return firstByte;
 	}
 
-	public void setFirstByte(long firstByte) {
+	public void setFirstByte(Data firstByte) {
 		this.firstByte = firstByte;
 	}
 
-	public long getIndexCount() {
+	public Data getIndexCount() {
 		return indexCount;
 	}
 
-	public void setIndexCount(long indexCount) {
+	public void setIndexCount(Data indexCount) {
 		this.indexCount = indexCount;
 	}
 
-	public long getTopology() {
+	public Data getTopology() {
 		return topology;
 	}
 
-	public void setTopology(long topology) {
+	public void setTopology(Data topology) {
 		this.topology = topology;
 	}
 
-	public long getBaseVertex() {
+	public Data getBaseVertex() {
 		return baseVertex;
 	}
 
-	public void setBaseVertex(long baseVertex) {
+	public void setBaseVertex(Data baseVertex) {
 		this.baseVertex = baseVertex;
 	}
 
-	public long getFirstVertex() {
+	public Data getFirstVertex() {
 		return firstVertex;
 	}
 
-	public void setFirstVertex(long firstVertex) {
+	public void setFirstVertex(Data firstVertex) {
 		this.firstVertex = firstVertex;
 	}
 
-	public long getVertexCount() {
+	public Data getVertexCount() {
 		return vertexCount;
 	}
 
-	public void setVertexCount(long vertexCount) {
+	public void setVertexCount(Data vertexCount) {
 		this.vertexCount = vertexCount;
 	}
 
-	public AABB getLocalAABB() {
+	public Type getType() {
+		return type;
+	}
+
+	public void setType(Type type) {
+		this.type = type;
+	}
+
+	/*
+	 * public AABB getLocalAABB() { return localAABB; }
+	 * 
+	 * public void setLocalAABB(AABB localAABB) { this.localAABB = localAABB; }
+	 */
+	public Data getLocalAABB() {
 		return localAABB;
 	}
 
-	public void setLocalAABB(AABB localAABB) {
+	public void setLocalAABB(Data localAABB) {
 		this.localAABB = localAABB;
-	}
-
-	public List<Face> getFaceList() {
-		return faceList;
-	}
-
-	public void setFaceList(List<Face> faceList) {
-		this.faceList = faceList;
 	}
 
 	public class AABB {
